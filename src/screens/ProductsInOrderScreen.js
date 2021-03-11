@@ -18,6 +18,7 @@ const ProductsInOrderScreen = (props) => {
     const [isRefreshing, setIsRefreshing] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState()
+    const [selectedProd, setSelectedProd] = useState(null)
 
     const dispatch = useDispatch();
 
@@ -66,12 +67,21 @@ const ProductsInOrderScreen = (props) => {
     const deleteHandler = async (id) => {
         await dispatch(productActions.removeItem(id))
     }
+    
+    const selectProdHadler = (id) => {
+        setSelectedProd(items.find(item => item.id === id))
+        setModalVisible(true)
+    }
+
+    const submitHandler = () => {
+        loadProducts();
+    }
 
     if (errorMsg) {
         return (<View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
-        <Text>Error</Text>
-        <Button title='Try again' onPress={() => loadProducts()}/>
-    </View>)
+            <Text>Error</Text>
+            <Button title='Try again' onPress={() => loadProducts()}/>
+        </View>)
     }
 
     if (isLoading) {
@@ -105,6 +115,7 @@ const ProductsInOrderScreen = (props) => {
                         keyExtractor={item => item.id}
                         renderItem={({item}) => <Animated.View style={{transform: [{translateX}]}}>
                                                     <Product
+                                                        onSelect={() => selectProdHadler(item.id)}
                                                         setDelayValue={setDelayValue}
                                                         id={item.id} 
                                                         name={item.name} 
@@ -125,9 +136,9 @@ const ProductsInOrderScreen = (props) => {
                         setModalVisible(!modalVisible);
                     }}
                 >
-                <View style={styles.centered}>
-                    <AddProdcutModal setModalVisible={setModalVisible}/>
-                </View>
+                    <View style={styles.centered}>
+                        <AddProdcutModal onSubmit={submitHandler} selectedProd={selectedProd} setModalVisible={setModalVisible}/>
+                    </View>
                 </Modal>
             </View>
    )

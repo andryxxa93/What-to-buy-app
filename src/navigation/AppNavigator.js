@@ -18,7 +18,7 @@ import { Button } from 'react-native';
 const defaultNavigationOptions = {
     defaultNavigationOptions: {
         headerStyle: {
-            backgroundColor: 'transparent'
+            backgroundColor: 'white',
         },
         headerTintColor: Colors.main,
     }

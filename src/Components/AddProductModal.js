@@ -8,15 +8,20 @@ import * as Colors from '../constants/Colors';
 import NeoMorphContainer from './UI/NeoMorphContainer';
 
 const AddProdcutModal = (props) => {
-    const [title, setTitle] = useState('')
-    const [comment, setComment] = useState('')
-    const [isBought, setIsBought] = useState(false)
+    const [title, setTitle] = useState(props.selectedProd.name || '')
+    const [comment, setComment] = useState(props.selectedProd.comment || '')
+    const [isBought, setIsBought] = useState(props.selectedProd.bought || false)
 
     const dispatch = useDispatch();
 
-    const submitHandler = useCallback(() => {
-        dispatch(productsActions.addItem(title, comment, isBought))
-        props.setModalVisible(false)
+    const submitHandler = useCallback(async () => {
+        if (props.selectedProd) {
+            await dispatch(productsActions.updateItem(props.selectedProd.id, title, comment, isBought))
+        } else {
+            await dispatch(productsActions.addItem(title, comment, isBought))
+        }
+        await props.setModalVisible(false)
+        await props.onSubmit()
     }, [dispatch, title, comment, isBought])
 
 
@@ -26,6 +31,7 @@ const AddProdcutModal = (props) => {
             <TextInput
                 style={styles.input}
                 id="title"
+                value={title}
                 placeholder="Название"
                 keyboardType="default"
                 autoCapitalize="sentences"
@@ -37,6 +43,7 @@ const AddProdcutModal = (props) => {
             <TextInput
                 style={styles.input}
                 id="comment"
+                value={comment}
                 placeholder="Комментарий"
                 keyboardType="default"
                 autoCapitalize="sentences"

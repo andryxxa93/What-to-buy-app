@@ -32,7 +32,7 @@ const Product = (props) => {
 
 
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={props.onSelect}>
             <NeoMorphContainer>
                 <LinearGradient
                     style={styles.item}
