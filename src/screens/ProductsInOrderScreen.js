@@ -21,13 +21,13 @@ const ProductsInOrderScreen = (props) => {
 
     const dispatch = useDispatch();
 
-    // const fadeAnim = useRef(new Animated.Value(0)).current;
+    const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    // const animation = () => Animated.spring(fadeAnim, {
-    //     toValue: 1,
-    //     tension: 20,
-    //     useNativeDriver: true
-    //   }).start();
+    const animation = () => Animated.spring(fadeAnim, {
+        toValue: 1,
+        tension: 20,
+        useNativeDriver: true
+      }).start();
 
     const loadProducts = useCallback(async () => {
         setErrorMsg(null)
@@ -51,6 +51,7 @@ const ProductsInOrderScreen = (props) => {
         setIsLoading(true)
         loadProducts()
             .then(res => setIsLoading(false))
+            .then(() => animation())
     }, [dispatch, loadProducts])
 
 
@@ -79,10 +80,10 @@ const ProductsInOrderScreen = (props) => {
         </View>
     }
 
-    // const translateX = fadeAnim.interpolate({
-    //     inputRange: [0, 1],
-    //     outputRange: [delayValue, 1]
-    // });
+    const translateX = fadeAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [delayValue, 1]
+    });
 
 	return (
             <View style={styles.container}>
@@ -95,14 +96,14 @@ const ProductsInOrderScreen = (props) => {
                             Добавьте чтобы не забыть!
                         </Text>
                     </View>
-                    : <FlatList
-                        style={{opacity: 1, width: '100%'}}
+                    : <Animated.FlatList
+                        style={{opacity: fadeAnim, width: '100%'}}
                         onRefresh={loadProducts}
                         refreshing={isRefreshing}
                         contentContainerStyle={styles.container}
                         data={items}
                         keyExtractor={item => item.id}
-                        renderItem={({item}) => <View>
+                        renderItem={({item}) => <Animated.View style={{transform: [{translateX}]}}>
                                                     <Product
                                                         setDelayValue={setDelayValue}
                                                         id={item.id} 
@@ -112,7 +113,7 @@ const ProductsInOrderScreen = (props) => {
                                                         bought={item.bought}
                                                         image={item.image}
                                                     />
-                                                </View>}
+                                                </Animated.View>}
                     />
                 }
                 <Modal

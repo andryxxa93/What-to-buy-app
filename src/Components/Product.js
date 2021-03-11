@@ -32,7 +32,8 @@ const Product = (props) => {
 
 
     return (
-        <NeoMorphContainer>
+        <TouchableOpacity>
+            <NeoMorphContainer>
                 <LinearGradient
                     style={styles.item}
                     colors={deleting ? colors.red : props.bought ? colors.green : colors.white}
@@ -67,7 +68,8 @@ const Product = (props) => {
                             />
                     </TouchableOpacity>
                 </LinearGradient>
-        </NeoMorphContainer>
+            </NeoMorphContainer>
+        </TouchableOpacity>
     )
 }
 
