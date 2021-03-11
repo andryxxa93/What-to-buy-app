@@ -1,14 +1,15 @@
 {
   "expo": {
-    "name": "BuyApp",
-    "slug": "BuyApp",
+    "name": "What to buy",
+    "slug": "what-to-buy",
+    "description": "Save what you need to buy in the app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#FFE7E7"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,13 +18,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.andryxa.what-to-buy",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#FFE7E7"
+      },
+      "package": "com.andryxa.what_to_buy.app",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
