@@ -15,7 +15,7 @@ const AddProdcutModal = (props) => {
     const dispatch = useDispatch();
 
     const submitHandler = useCallback(async () => {
-        if (props.selectedProd) {
+        if (props.selectedProd.id) {
             await dispatch(productsActions.updateItem(props.selectedProd.id, title, comment, isBought))
         } else {
             await dispatch(productsActions.addItem(title, comment, isBought))

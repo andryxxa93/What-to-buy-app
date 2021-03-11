@@ -8,8 +8,7 @@ import AuthScreen from '../screens/AuthScreen';
 import * as authActions from '../store/actions/auth';
 
 import * as Colors from '../constants/Colors';
-import {Ionicons} from '@expo/vector-icons';
-import { Platform, View } from 'react-native';
+import { View } from 'react-native';
 import StartupScreen from '../screens/StartupScreen';
 import { SafeAreaView } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -28,20 +27,10 @@ const ProductsInOrderNavigator = createStackNavigator({
     ProductsInOrder: ProductsInOrderScreen,
 }, {
     navigationOptions: {
-        drawer: drawerConfig => {
-            <Ionicons
-                name={Platform.OS === 'ios' ? 'ios-cart' : 'cart-sharp'}
-                size={23}
-                color={Colors.main}
-            />
-        },
+        title: 'Список покупок'
     },
     ...defaultNavigationOptions
 })
-
-ProductsInOrderNavigator.navigationOptions = {
-    title: 'Что Купить',
-}
 
 const ProductsNavigator = createDrawerNavigator({
     products: ProductsInOrderNavigator
@@ -54,7 +43,7 @@ const ProductsNavigator = createDrawerNavigator({
         return <View style={{flex: 1, paddingTop: 20}}>
             <SafeAreaView forceInset={{top: 'always', horizontal: 'never'}}>
                 <DrawerNavigatorItems {...props}/>
-                <Button title='Logout' color={Colors.main} onPress={() => {
+                <Button title='Logout' color={Colors.accent} onPress={() => {
                     dispatch(authActions.logout())
                     props.navigation.navigate('Auth')
                 }}/>

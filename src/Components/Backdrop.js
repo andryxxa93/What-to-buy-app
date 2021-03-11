@@ -10,7 +10,7 @@ export const Backdrop = ({ visible, onPress }) => {
 
 const styles = StyleSheet.create({
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     height: heightMobile,
     position: 'absolute',
     width: '100%',

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, Button, FlatList, Modal, Animated, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, Dimensions, Modal, Animated, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as productActions from '../store/actions/products';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
@@ -8,6 +8,9 @@ import HeaderButton from '../Components/UI/HeaderButton';
 import * as Colors from '../constants/Colors';
 import AddProdcutModal from '../Components/AddProductModal';
 import { Backdrop } from '../Components/Backdrop';
+
+const height = Dimensions.get('screen').height;
+
 
 const ProductsInOrderScreen = (props) => {
 	const items = useSelector(state => state.products.products)
@@ -18,7 +21,7 @@ const ProductsInOrderScreen = (props) => {
     const [isRefreshing, setIsRefreshing] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [errorMsg, setErrorMsg] = useState()
-    const [selectedProd, setSelectedProd] = useState(null)
+    const [selectedProd, setSelectedProd] = useState({})
 
     const dispatch = useDispatch();
 
@@ -74,6 +77,7 @@ const ProductsInOrderScreen = (props) => {
     }
 
     const submitHandler = () => {
+        setSelectedProd({})
         loadProducts();
     }
 
@@ -149,7 +153,8 @@ ProductsInOrderScreen.navigationOptions = navData => {
     const openModal = navData.navigation.getParam('openModal')
 
     return {
-        headerTitle: 'Что Купить',
+        headerTransparent: true,
+        headerTitle: 'Список покупок',
         headerLeft: () => <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
             title='MenuItem'
@@ -174,7 +179,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 	container: {
-        paddingVertical: 10,
+        paddingVertical: height / 100 * 6,
         flexDirection: 'column',
 		justifyContent: 'flex-start',
         alignItems: 'center'
